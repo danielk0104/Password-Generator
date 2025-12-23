@@ -1,6 +1,7 @@
 import sys
 from PySide6.QtCore import QSize, Qt
-from PySide6.QtWidgets import QApplication, QMainWindow, QLabel, QVBoxLayout, QWidget, QLineEdit, QPushButton, QSlider
+from PySide6.QtWidgets import QApplication, QMainWindow, QLabel, QVBoxLayout, QWidget, QLineEdit, QPushButton, \
+    QCheckBox, QSlider
 import random
 import string
 
@@ -13,7 +14,7 @@ class Window(QMainWindow):
         self.setWindowTitle("Password Generator")
 
         # Set the window size
-        self.setFixedSize(QSize(400, 170))
+        self.setFixedSize(QSize(500, 280))
 
         # Set up layout
         self.layout = QVBoxLayout()
@@ -36,13 +37,27 @@ class Window(QMainWindow):
 
         # Set character limit
         self.characters = QSlider(Qt.Horizontal)
-        self.characters.setRange(1, 128)
+        self.characters.setRange(1, 64)
         self.characters.valueChanged.connect(self.character_value)
         self.layout.addWidget(self.characters)
 
         # Display character limit
         self.character_display = QLabel("Character Limit: 1")
         self.layout.addWidget(self.character_display)
+
+        # Include letters checkbox - starts checked
+        self.letters = QCheckBox("Include letters")
+        self.letters.setChecked(True)
+        self.layout.addWidget(self.letters)
+
+        # Include numbers checkbox - starts checked
+        self.numbers = QCheckBox("Include numbers")
+        self.numbers.setChecked(True)
+        self.layout.addWidget(self.numbers)
+
+        # Include symbols checkbox
+        self.symbols = QCheckBox("Include symbols")
+        self.layout.addWidget(self.symbols)
 
         # Generate button
         generate_button = QPushButton("Generate Password")
@@ -62,7 +77,7 @@ class Window(QMainWindow):
 
     # Generate a random string
     def random_string(self):
-        self.edit_box.setText(''.join(random.choice(string.ascii_letters + string.digits) for _ in range(self.characters.value())))
+        self.edit_box.setText(''.join(random.choice(string.ascii_letters + string.digits + string.punctuation) for _ in range(self.characters.value())))
 
 # Running the application
 if __name__ == '__main__':
