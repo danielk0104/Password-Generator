@@ -51,6 +51,7 @@ class Window(QMainWindow):
         # Button workings
         generate_button.clicked.connect(self.random_string)
 
+        # Container
         container = QWidget()
         container.setLayout(self.layout)
         self.setCentralWidget(container)
