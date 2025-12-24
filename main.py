@@ -77,7 +77,17 @@ class Window(QMainWindow):
 
     # Generate a random string
     def random_string(self):
-        self.edit_box.setText(''.join(random.choice(string.ascii_letters + string.digits + string.punctuation) for _ in range(self.characters.value())))
+        pool = ""
+
+        if self.letters.isChecked():
+            pool += string.ascii_letters
+        if self.numbers.isChecked():
+            pool += string.digits
+        if self.symbols.isChecked():
+            pool += string.punctuation
+
+        rand_string = ''.join(random.choice(pool) for _ in range(self.characters.value()))
+        self.edit_box.setText(rand_string)
 
 # Running the application
 if __name__ == '__main__':
